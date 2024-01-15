@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1705084469837,
+      "tag": "0000_thick_corsair",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1705150779756,
+      "tag": "0001_high_mandarin",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1705152161629,
+      "tag": "0002_amazing_kitty_pryde",
+      "breakpoints": true
+    }
+  ]
+}
