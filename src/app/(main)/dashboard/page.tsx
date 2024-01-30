@@ -6,6 +6,8 @@ import db from '@/lib/supabase/db';
 import { redirect } from 'next/navigation';
 import DashboardSetup from '@/components/dashboard-setup/dashboard-setup';
 import { getUserSubscriptionStatus } from '@/lib/supabase/queries';
+import AppStateProvider from '@/lib/providers/state-providers';
+
 
 const DashboardPage = async () => {
     const supabase = createServerComponentClient({ cookies });
@@ -27,6 +29,7 @@ const DashboardPage = async () => {
 
     if (!workspace)
         return (
+            
             <div
                 className="bg-background
         h-screen
@@ -40,7 +43,8 @@ const DashboardPage = async () => {
                     user={user}
                     subscription={subscription}
                 />
-            </div>
+                </div>
+            
         );
 
     redirect(`/dashboard/${workspace.id}`);

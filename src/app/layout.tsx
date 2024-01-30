@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import db from '@/lib/supabase/db'
 import { ThemeProvider } from '@/lib/providers/next-theme-provider';
+import AppStateProvider from '@/lib/providers/state-providers';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,11 +22,13 @@ export default function RootLayout({
     
     <html lang="en">
       <body className={inter.className}>
+        <AppStateProvider>
         <ThemeProvider
           attribute='class'
           defaultTheme='dark'
           enableSystem
-        >{children}</ThemeProvider>
+          >{children}</ThemeProvider>
+        </AppStateProvider>
       </body>
     </html>
   )
