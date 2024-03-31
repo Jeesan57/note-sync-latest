@@ -2,7 +2,7 @@ import React from 'react'
 
 const WorkspacePage = () => {
   return (
-    <div>page</div>
+    <div className='overflow-auto'>Workspace</div>
   )
 }
 

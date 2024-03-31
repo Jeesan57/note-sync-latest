@@ -22,6 +22,20 @@
       "when": 1705152161629,
       "tag": "0002_amazing_kitty_pryde",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1710624068463,
+      "tag": "0003_aromatic_kat_farrell",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1710624337335,
+      "tag": "0004_absent_robbie_robertson",
+      "breakpoints": true
     }
   ]
 }
