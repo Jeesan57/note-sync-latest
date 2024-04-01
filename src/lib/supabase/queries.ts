@@ -1,5 +1,5 @@
 'use server';
-import { and, eq, notExists } from 'drizzle-orm';
+import { and, eq, notExists, ilike } from 'drizzle-orm';
 import { files, folders, users, workspaces } from '../../../migrations/schema';
 import db from './db';
 import { File, Folder, Subscription, User, workspace } from './supabase.types';
@@ -129,3 +129,9 @@ export const addCollaborators = async (users: User[], workspaceId: string) => {
             await db.insert(collaborators).values({ workspaceId, userId: user.id });
     });
 };
+
+export const getUsersFromSearch = async (email: string) => {
+    if (!email) return [];
+    const accounts = db.select().from(users).where(ilike(users.email, `${email}%`));
+    return accounts;
+}

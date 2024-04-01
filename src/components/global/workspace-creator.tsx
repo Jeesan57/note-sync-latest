@@ -19,6 +19,9 @@ import { Button } from '../ui/button';
 import { v4 } from 'uuid';
 import { addCollaborators, createWorkspace } from '@/lib/supabase/queries';
 import CollaboratorSearch from './collaborator-search';
+import { ScrollArea } from '../ui/scroll-area';
+import { Avatar } from '@radix-ui/react-avatar';
+import { AvatarFallback, AvatarImage } from '../ui/avatar';
 
 
 const WorkspaceCreator = () => {
@@ -26,7 +29,52 @@ const WorkspaceCreator = () => {
     const router = useRouter();
     const [permissions, setPermissions] = useState('private');
     const [title, setTitle] = useState('');
-    const [collaborators, setCollaborators] = useState<User[]>([]);
+    const [collaborators, setCollaborators] = useState<User[]>([{
+        id: "1",
+        fullName: "John Doe",
+        avatarUrl: "https://example.com/avatar1.png",
+        billingAddress: { /* Billing address object */ },
+        updatedAt: "2022-03-21T12:00:00Z",
+        paymentMethod: { /* Payment method object */ },
+        email: "john@example.com",
+    },
+    {
+        id: "2",
+        fullName: "Jane Smith",
+        avatarUrl: "https://example.com/avatar2.png",
+        billingAddress: { /* Billing address object */ },
+        updatedAt: "2022-03-21T13:00:00Z",
+        paymentMethod: { /* Payment method object */ },
+        email: "jane@example.com",
+    },
+    {
+        id: "3",
+        fullName: null,
+        avatarUrl: null,
+        billingAddress: { /* Billing address object */ },
+        updatedAt: null,
+        paymentMethod: { /* Payment method object */ },
+        email: "test@example.com",
+    },
+    {
+        id: "4",
+        fullName: "Jane Smith",
+        avatarUrl: "https://example.com/avatar2.png",
+        billingAddress: { /* Billing address object */ },
+        updatedAt: "2022-03-21T13:00:00Z",
+        paymentMethod: { /* Payment method object */ },
+        email: "jane@example.com",
+    },
+    {
+        id: "5",
+        fullName: "Jane Smith",
+        avatarUrl: "https://example.com/avatar2.png",
+        billingAddress: { /* Billing address object */ },
+        updatedAt: "2022-03-21T13:00:00Z",
+        paymentMethod: { /* Payment method object */ },
+        email: "jane@example.com",
+    },
+    ]);
 
     const addCollaborator = (user: User) => {
         setCollaborators([...collaborators, user]);
@@ -132,18 +180,86 @@ const WorkspaceCreator = () => {
                     </SelectContent>
                 </Select>
             </>
-            {permissions === 'shared' && <div>
-                <CollaboratorSearch
-                    existingCollaborators={collaborators}
-                    getCollaborators={(user) => {
-                        addCollaborator(user);
-                    }}
-                >
-                    <Button type='button' className='text-sm mt-4'>
-                        <Plus />
-                        Add Collaborators
-                    </Button>
-                </CollaboratorSearch></div>}
+            {permissions === 'shared' && (
+                <div>
+                    <CollaboratorSearch
+                        existingCollaborators={collaborators}
+                        getCollaborator={(user) => {
+                            addCollaborator(user);
+                        }}
+                    >
+                        <Button type='button' className='text-sm mt-4'>
+                            <Plus />
+                            Add Collaborators
+                        </Button>
+                    </CollaboratorSearch>
+                    <div className='mt-4'>
+                        <span className='text-sm text-muted-foreground'>
+                            Collaborators {collaborators.length || ''}
+                        </span>
+                        <ScrollArea className='h-[130px]
+                                    overflow-y-auto
+                                    w-full
+                                    rounded-md
+                                    border
+                                    border-muted-foreground/20
+                                    '>
+                            {collaborators.length ? (
+                                collaborators.map((c) => (
+                                    <div
+                                        className="p-4 flex
+                                            justify-between
+                                            items-center
+                                        "
+                                        key={c.id}
+                                    >
+                                        <div className="flex gap-4 items-center">
+                                            <Avatar>
+                                                <AvatarImage className='rounded-full w-12 h-12' src="/avatars/7.png" />
+                                                <AvatarFallback>PJ</AvatarFallback>
+                                            </Avatar>
+                                            <div className="text-sm 
+                                                    gap-2
+                                                    text-muted-foreground
+                                                    overflow-hidden
+                                                    overflow-ellipsis
+                                                    sm:w-[300px]
+                                                    w-[140px]
+                                                    
+                                                    "
+                                            >
+                                                {c.email}
+                                            </div>
+                                        </div>
+                                        <Button
+                                            variant="secondary"
+                                            onClick={() => removeCollaborator(c)}
+                                        >
+                                            Remove
+                                        </Button>
+                                    </div>
+                                ))
+                            ) : (
+                                <div
+                                    className="absolute
+                                    right-0 left-0
+                                    top-0
+                                    bottom-0
+                                    flex
+                                    justify-center
+                                    items-center
+                                    "
+                                >
+                                    <span className="text-muted-foreground text-sm">
+                                        You have no collaborators
+                                    </span>
+                                </div>
+                            )}
+                        </ScrollArea>
+
+                    </div>
+                </div>
+            )}
             <Button type='button'
                 disabled={
                     !title || (permissions === 'shared' && collaborators.length === 0)
